@@ -1,0 +1,215 @@
+# 📘 EssentiaX API – Addon Development Guide
+
+Welcome to the official **EssentiaX API**.  
+This API allows developers to create **addons for EssentiaX** without needing access to the main plugin and **without using a plugin.yml**.  
+EssentiaX itself is **closed source**, but the API is **public** so anyone can build extensions.
+
+---
+
+# ✨ Features
+- Addons are **simple JAR files**
+- Addons go into:
+
+```bash
+/plugins/EssentiaX/addons/
+```
+
+- No plugin.yml required  
+- Easy API interface  
+- Full **Maven & Gradle support via JitPack**  
+- Addons are fully managed by the internal EssentiaX AddonLoader
+
+---
+
+# 📦 Maven / Gradle Setup
+
+The API is distributed using **JitPack**.
+
+---
+
+## 🟦 Gradle
+
+Add this to your `build.gradle`:
+
+```gradle
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  compileOnly 'com.github.Mobilestars:EssentiaX-API:VERSION'
+}
+```
+
+---
+
+🟧 Maven
+
+Add this to your `pom.xml`:
+```xml
+<repositories>
+    <repository>
+        <id>jitpack</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.Mobilestars</groupId>
+        <artifactId>EssentiaX-API</artifactId>
+        <version>VERSION</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+Replace:
+```java
+VERSION → the released tag (e.g. v1.0.0)
+```
+
+---
+
+🧩 Addon Structure
+
+An EssentiaX addon consists of:
+
+ 1. a JAR file containing your code
+
+ 2. an addon.yml inside the JAR (instead of plugin.yml)
+
+Directory structure:
+```css
+MyAddon/
+ ├─ src/main/java/
+ │   └─ your/package/MyAddon.java
+ ├─ src/main/resources/
+ │   └─ addon.yml
+ └─ build.gradle or pom.xml
+ ```
+
+---
+
+📝 addon.yml
+
+```yml
+This file is REQUIRED:
+name: ExampleAddon
+version: 1.0.0
+main: your.package.MyAddon
+author: YourName
+```
+
+⚠️ Must be placed in src/main/resources so it gets packed into the JAR.
+⚠️ Do not include a plugin.yml — EssentiaX loads addons directly.
+
+---
+
+👨‍💻 Writing Your First Addon
+
+Every addon must implement the EssentiaXAddon interface.
+
+Example:
+```java
+package your.package;
+
+import de.scholle.essentiax.api.EssentiaXAddon;
+import de.scholle.essentiax.api.EssentiaXAPI;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+public class MyAddon implements EssentiaXAddon, Listener {
+
+    @Override
+    public void onLoad(EssentiaXAPI api) {
+        api.log("[MyAddon] Loading...");
+    }
+
+    @Override
+    public void onEnable(EssentiaXAPI api) {
+        api.log("[MyAddon] Enabled!");
+
+        // Register listeners
+        Bukkit.getPluginManager().registerEvents(this, api.getPlugin());
+    }
+
+    @Override
+    public void onDisable(EssentiaXAPI api) {
+        api.log("[MyAddon] Disabled.");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        e.getPlayer().sendMessage("§aWelcome! (from MyAddon)");
+    }
+}
+```
+---
+
+📤 Building the Addon
+Gradle
+```bash
+./gradlew build
+```
+JAR output:
+```bash
+build/libs/
+```
+Maven
+```go
+mvn package
+´´´
+JAR output:
+```bash
+target/
+```
+---
+
+📥 Installing the Addon
+
+Place your final JAR into:
+```bash
+/plugins/EssentiaX/addons/
+```
+On the next server start, EssentiaX will automatically load:
+
+✔ addon.yml
+✔ your main class
+✔ events
+✔ all addon features
+
+No plugin.yml needed at all.
+
+---
+
+🧪 Recommended Project Layout
+```css
+MyAddon/
+ ├─ src/main/java/
+ │   └─ your/package/MyAddon.java
+ ├─ src/main/resources/
+ │   └─ addon.yml
+ ├─ build.gradle
+ ├─ settings.gradle
+ └─ README.md
+```
+---
+
+🤝 Contributing
+
+EssentiaX API is open-source.
+Issues and pull requests are welcome!
+
+---
+
+📜 License
+
+EssentiaX API is open-source.
+EssentiaX main plugin remains closed-source.
+
+---
+
+Created by **Mobilestars**

@@ -1,0 +1,6 @@
+plugins {
+    id 'java'
+}
+
+group = 'de.scholle.essentiax'
+version = '1.0.0'
