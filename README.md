@@ -98,36 +98,39 @@ Example:
 ```java
 package your.package;
 
-import de.scholle.essentiax.api.EssentiaXAddon;
-import de.scholle.essentiax.api.EssentiaXAPI;
+import de.scholle.essentiax.EssentiaX;
+import de.scholle.essentiax.addons.EssentiaXAddon;
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class MyAddon implements EssentiaXAddon, Listener {
 
+    private EssentiaX plugin;
+
     @Override
-    public void onLoad(EssentiaXAPI api) {
-        api.log("[MyAddon] Loading...");
+    public void onLoad(EssentiaX plugin) {
+        this.plugin = plugin;
+        plugin.getLogger().info("[MyAddon] Loading...");
     }
 
     @Override
-    public void onEnable(EssentiaXAPI api) {
-        api.log("[MyAddon] Enabled!");
+    public void onEnable(EssentiaX plugin) {
+        // Register events
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
-        // Register listeners
-        Bukkit.getPluginManager().registerEvents(this, api.getPlugin());
+        plugin.getLogger().info("[MyAddon] Enabled!");
     }
 
     @Override
-    public void onDisable(EssentiaXAPI api) {
-        api.log("[MyAddon] Disabled.");
+    public void onDisable(EssentiaX plugin) {
+        plugin.getLogger().info("[MyAddon] Disabled.");
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        e.getPlayer().sendMessage("§aWelcome! (from MyAddon)");
+    public void onJoin(PlayerJoinEvent event) {
+        event.getPlayer().sendMessage("§aWelcome! (from MyAddon)");
     }
 }
 ```
