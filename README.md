@@ -16,14 +16,7 @@ EssentiaX itself is **closed source**, but the API is **public** so anyone can b
 
 - No plugin.yml required  
 - Easy API interface  
-- Full **Maven & Gradle support via JitPack**  
 - Addons are fully managed by the internal EssentiaX AddonLoader
-
----
-
-# 📦 Maven / Gradle Setup
-
-The API is distributed using **JitPack**.
 
 ---
 
