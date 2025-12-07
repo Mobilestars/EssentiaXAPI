@@ -1,9 +1,9 @@
-package de.scholle.essentiax.addons;
+package de.scholle.essentiax.api;
 
-import de.scholle.essentiax.EssentiaX;
+import org.bukkit.plugin.Plugin;
 
 public interface EssentiaXAddon {
-    void onLoad(EssentiaX plugin);
-    void onEnable(EssentiaX plugin);
-    void onDisable(EssentiaX plugin);
+    void onLoad(Plugin plugin);
+    void onEnable(Plugin plugin);
+    void onDisable(Plugin plugin);
 }

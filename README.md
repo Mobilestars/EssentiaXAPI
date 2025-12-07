@@ -29,15 +29,12 @@ The API is distributed using **JitPack**.
 
 ## 🟦 Gradle
 
+Add the newest EsentiaX jar file in to the folder where your build.grdle is placed
 Add this to your `build.gradle`:
 
 ```gradle
-repositories {
-  maven { url 'https://jitpack.io' }
-}
-
 dependencies {
-  compileOnly 'com.github.Mobilestars:EssentiaX-API:VERSION'
+  compileOnly files('EssentiaX-VERSION.jar')
 }
 ```
 
@@ -47,19 +44,13 @@ dependencies {
 
 Add this to your `pom.xml`:
 ```xml
-<repositories>
-    <repository>
-        <id>jitpack</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
 <dependencies>
     <dependency>
         <groupId>com.github.Mobilestars</groupId>
         <artifactId>EssentiaX-API</artifactId>
         <version>VERSION</version>
         <scope>provided</scope>
+        <systemPath>${project.basedir}/libs/EssentiaX-VERSION.jar</systemPath>
     </dependency>
 </dependencies>
 ```
@@ -193,8 +184,7 @@ MyAddon/
  ├─ src/main/resources/
  │   └─ addon.yml
  ├─ build.gradle
- ├─ settings.gradle
- └─ README.md
+ └─ settings.gradle
 ```
 ---
 
